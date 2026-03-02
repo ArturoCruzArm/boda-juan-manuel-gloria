@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logística - Boda Juan Manuel &amp; Gloria | Foro 7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0D1F35 0%, #162A48 100%);
+            color: #333; padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px; margin: 0 auto;
+            background: white; border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0D1F35 0%, #162A48 100%);
+            color: white; padding: 3rem 2rem; text-align: center;
+            border-bottom: 3px solid #C9A844;
+        }
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem; margin-bottom: 0.5rem;
+            color: #C9A844;
+        }
+        .header p { font-size: 1rem; opacity: 0.8; }
+
+        .nav-links {
+            display: flex; justify-content: center;
+            gap: 15px; margin: 20px 0; flex-wrap: wrap;
+        }
+        .nav-links a {
+            display: inline-block;
+            background: rgba(201,168,68,0.15);
+            border: 1px solid rgba(201,168,68,0.4);
+            color: #C9A844;
+            padding: 10px 25px; border-radius: 25px;
+            text-decoration: none; transition: all 0.3s; font-weight: 600;
+        }
+        .nav-links a:hover {
+            background: rgba(201,168,68,0.25); transform: translateY(-2px);
+        }
+
+        .content { padding: 3rem 2rem; }
+
+        .section { margin-bottom: 3rem; }
+        .section-title {
+            font-size: 1.6rem; color: #0D1F35;
+            margin-bottom: 1.5rem; padding-bottom: 0.5rem;
+            border-bottom: 3px solid #C9A844;
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Cinzel', serif;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f5f0e4 0%, #ede5c8 100%);
+            padding: 2rem; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #C9A844;
+        }
+        .info-card h3 {
+            color: #0D1F35; margin-bottom: 1rem;
+            font-size: 1.2rem; font-family: 'Cinzel', serif;
+        }
+        .info-card p { margin-bottom: 0.5rem; line-height: 1.6; }
+        .info-card strong { color: #B8962E; }
+
+        .checklist { list-style: none; }
+        .checklist li {
+            padding: 0.75rem; margin-bottom: 0.5rem;
+            background: #f8f9fa; border-left: 4px solid #C9A844;
+            border-radius: 5px; display: flex; align-items: center; gap: 10px;
+        }
+        .checklist li:before { content: "[ ]"; font-size: 1rem; color: #B8962E; font-weight: bold; }
+        .checklist li.completed:before { content: "[X]"; color: #10b981; }
+
+        .timeline { position: relative; padding-left: 2rem; }
+        .timeline:before {
+            content: ""; position: absolute;
+            left: 0; top: 0; bottom: 0; width: 3px;
+            background: linear-gradient(180deg, #C9A844 0%, #0D1F35 100%);
+        }
+        .timeline-item { position: relative; margin-bottom: 2rem; padding-left: 2rem; }
+        .timeline-item:before {
+            content: ""; position: absolute;
+            left: -2.6rem; top: 0;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: white; border: 3px solid #C9A844;
+        }
+        .timeline-item.completed:before { background: #10b981; border-color: #10b981; }
+        .timeline-date { font-weight: 600; color: #B8962E; margin-bottom: 0.5rem; font-family: 'Cinzel', serif; }
+
+        .status-badge {
+            display: inline-block; padding: 0.25rem 1rem;
+            border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-left: 0.5rem;
+        }
+        .status-completed { background: #d1fae5; color: #065f46; }
+        .status-pending   { background: #fef3c7; color: #92400e; }
+        .status-urgent    { background: #fee2e2; color: #991b1b; }
+
+        .contact-box {
+            background: linear-gradient(135deg, #0D1F35 0%, #162A48 100%);
+            color: white; padding: 2rem; border-radius: 15px; text-align: center;
+            border: 1px solid rgba(201,168,68,0.3);
+        }
+        .contact-box h3 { margin-bottom: 1rem; color: #C9A844; font-family: 'Cinzel', serif; }
+        .contact-box a { color: #C9A844; text-decoration: none; }
+
+        .protocol-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .protocol-table th, .protocol-table td {
+            border: 1px solid #e5e7eb; padding: 0.75rem; text-align: left;
+        }
+        .protocol-table th {
+            background: linear-gradient(135deg, #0D1F35 0%, #162A48 100%);
+            color: #C9A844; font-family: 'Cinzel', serif;
+        }
+        .protocol-table tr:nth-child(even) { background-color: #f5f0e4; }
+
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.7rem; }
+            .protocol-table { font-size: 0.9rem; }
+            body { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Logística del Evento</h1>
+            <p>Boda de Juan Manuel Bernal Aguayo &amp; Gloria</p>
+            <p>Sábado 26 de Diciembre, 2026 · Purísima del Rincón, Gto.</p>
+            <div class="nav-links">
+                <a href="contrato.html">Contrato</a>
+                <a href="logistica.html">Logística</a>
+                <a href="selector.html">Selector de Fotos</a>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- Información General -->
+            <section class="section">
+                <h2 class="section-title">✦ Información General del Evento</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Los Novios</h3>
+                        <p><strong>Novio:</strong> Juan Manuel Bernal Aguayo</p>
+                        <p><strong>Novia:</strong> Gloria</p>
+                        <p><strong>Fecha:</strong> Sábado 26 de Diciembre, 2026</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Contacto</h3>
+                        <p><strong>Contratante:</strong> Juan Manuel Bernal Aguayo</p>
+                        <p><strong>Tel/WhatsApp:</strong> 476 100 5385</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Paquete Contratado</h3>
+                        <p><strong>Paquete:</strong> Super Paquete</p>
+                        <p><strong>Total:</strong> $8,500.00 MXN</p>
+                        <p><strong>Anticipo:</strong> $1,000.00 MXN</p>
+                        <p><strong>Saldo:</strong> $7,500.00 MXN</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lugares del Evento -->
+            <section class="section">
+                <h2 class="section-title">✦ Lugares del Evento</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Ceremonia Religiosa</h3>
+                        <p><strong>Templo:</strong> Señor de Esquipulas</p>
+                        <p><strong>Dirección:</strong> C. de Esquipulas 106</p>
+                        <p><strong>Municipio:</strong> Purísima de Bustos, Gto.</p>
+                        <p><strong>Hora:</strong> Por confirmar</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Recepción (Fiesta)</h3>
+                        <p><strong>Salón:</strong> Salón de Fiestas Karol</p>
+                        <p><strong>Ubicación:</strong> Zona Centro</p>
+                        <p><strong>Ciudad:</strong> Purísima del Rincón, Gto.</p>
+                        <p><strong>Hora:</strong> Por confirmar</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Sesión Fotográfica</h3>
+                        <p><strong>Fecha:</strong> Por confirmar</p>
+                        <p><strong>Hora:</strong> Por confirmar</p>
+                        <p><strong>Lugar:</strong> Por confirmar</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Protocolo -->
+            <section class="section">
+                <h2 class="section-title">✦ Protocolo del Evento (Minuto a Minuto)</h2>
+                <table class="protocol-table">
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Actividad</th>
+                            <th>Lugar / Notas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Por confirmar</td>
+                            <td>Ceremonia Religiosa</td>
+                            <td>Templo del Señor de Esquipulas</td>
+                        </tr>
+                        <tr>
+                            <td>Por confirmar</td>
+                            <td>Llegada al Salón</td>
+                            <td>Salón de Fiestas Karol</td>
+                        </tr>
+                        <tr>
+                            <td>Por confirmar</td>
+                            <td>Recepción / Comida</td>
+                            <td>Salón de Fiestas Karol</td>
+                        </tr>
+                        <tr>
+                            <td>Por confirmar</td>
+                            <td>Primer Baile</td>
+                            <td>Vals de los novios</td>
+                        </tr>
+                        <tr>
+                            <td>Por confirmar</td>
+                            <td>Brindis</td>
+                            <td>Momento especial</td>
+                        </tr>
+                        <tr>
+                            <td>Por confirmar</td>
+                            <td>Pastel</td>
+                            <td>Partido de pastel</td>
+                        </tr>
+                        <tr>
+                            <td>Por confirmar</td>
+                            <td>Cierre del evento</td>
+                            <td>Por confirmar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Timeline -->
+            <section class="section">
+                <h2 class="section-title">✦ Cronología del Proyecto</h2>
+                <div class="timeline">
+                    <div class="timeline-item completed">
+                        <p class="timeline-date">Marzo 2026 <span class="status-badge status-completed">Completado</span></p>
+                        <p>Primer contacto y cotización del Super Paquete $8,500</p>
+                    </div>
+                    <div class="timeline-item completed">
+                        <p class="timeline-date">Anticipo recibido <span class="status-badge status-completed">Completado</span></p>
+                        <p>Recepción de anticipo: $1,000.00 MXN</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="timeline-date">Por confirmar <span class="status-badge status-pending">Pendiente</span></p>
+                        <p>Sesión fotográfica previa al evento</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="timeline-date">18 de Diciembre, 2026 <span class="status-badge status-urgent">Importante</span></p>
+                        <p>Fecha límite de pago del saldo restante: $7,500.00 MXN</p>
+                        <p style="font-size:0.9em;color:#666;margin-top:0.5rem;">8 días antes del evento</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="timeline-date">26 de Diciembre, 2026 <span class="status-badge status-pending">Pendiente</span></p>
+                        <p><strong>DÍA DEL EVENTO</strong></p>
+                        <p>Ceremonia - Templo del Señor de Esquipulas</p>
+                        <p>Recepción - Salón de Fiestas Karol</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="timeline-date">Enero-Febrero, 2027 <span class="status-badge status-pending">Pendiente</span></p>
+                        <p>Entrega de material final (30-45 días después del evento)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Checklist -->
+            <section class="section">
+                <h2 class="section-title">✦ Checklist Foro 7 - Antes del Evento</h2>
+
+                <h3 style="color:#B8962E;margin:1.5rem 0 1rem;font-family:'Cinzel',serif;">Sesión Previa</h3>
+                <ul class="checklist">
+                    <li>Coordinar fecha de sesión con los novios</li>
+                    <li>Coordinar hora y lugar de sesión</li>
+                    <li>Verificar que tengan traje/vestido y accesorios</li>
+                    <li>Verificar equipo fotográfico (cámaras, lentes)</li>
+                    <li>Cargar todas las baterías</li>
+                    <li>Formatear tarjetas de memoria</li>
+                    <li>Llevar reflectores/iluminación portátil</li>
+                </ul>
+
+                <h3 style="color:#B8962E;margin:1.5rem 0 1rem;font-family:'Cinzel',serif;">Día del Evento</h3>
+                <ul class="checklist">
+                    <li>Llegar 30 minutos antes a la ceremonia</li>
+                    <li>Confirmar dirección del templo (C. de Esquipulas 106, Purísima de Bustos)</li>
+                    <li>Confirmar ubicación del Salón de Fiestas Karol</li>
+                    <li>Verificar hora exacta de ceremonia</li>
+                    <li>Verificar hora exacta de llegada al salón</li>
+                    <li>Verificar equipo completo (cámaras, lentes, audio)</li>
+                    <li>Cargar todas las baterías (foto, video)</li>
+                    <li>Llevar baterías de repuesto</li>
+                    <li>Llevar tarjetas de memoria formateadas</li>
+                    <li>Verificar iluminación (flashes foto, luces video)</li>
+                    <li>Confirmar recepción del saldo pendiente</li>
+                </ul>
+
+                <h3 style="color:#B8962E;margin:1.5rem 0 1rem;font-family:'Cinzel',serif;">Post-Evento</h3>
+                <ul class="checklist">
+                    <li>Respaldar todo el material (fotos, video)</li>
+                    <li>Editar fotografías</li>
+                    <li>Editar video (musicalizar y titular)</li>
+                    <li>Crear videoclip de sesión previa</li>
+                    <li>Cliente selecciona fotos para impresión</li>
+                    <li>Imprimir fotografías</li>
+                    <li>Preparar USB con caja impresa</li>
+                    <li>Entregar material completo al cliente</li>
+                </ul>
+            </section>
+
+            <!-- Info Pendiente -->
+            <section class="section">
+                <h2 class="section-title">✦ Información Pendiente</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Confirmado</h3>
+                        <ul style="list-style:none;padding:0;">
+                            <li style="margin-bottom:0.5rem;">[X] Novio: Juan Manuel Bernal Aguayo</li>
+                            <li style="margin-bottom:0.5rem;">[X] Novia: Gloria</li>
+                            <li style="margin-bottom:0.5rem;">[X] Fecha: 26 de Diciembre de 2026</li>
+                            <li style="margin-bottom:0.5rem;">[X] Templo: Señor de Esquipulas</li>
+                            <li style="margin-bottom:0.5rem;">[X] Salón: Fiestas Karol, Purísima del Rincón</li>
+                            <li style="margin-bottom:0.5rem;">[X] Paquete: Super Paquete $8,500</li>
+                            <li style="margin-bottom:0.5rem;">[X] Anticipo: $1,000</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>Por Confirmar</h3>
+                        <ul style="list-style:none;padding:0;">
+                            <li style="margin-bottom:0.5rem;">[ ] Hora de ceremonia religiosa</li>
+                            <li style="margin-bottom:0.5rem;">[ ] Hora de llegada al salón</li>
+                            <li style="margin-bottom:0.5rem;">[ ] Horario completo de la recepción</li>
+                            <li style="margin-bottom:0.5rem;">[ ] Fecha y lugar de sesión previa</li>
+                            <li style="margin-bottom:0.5rem;">[ ] Apellidos de la novia</li>
+                            <li style="margin-bottom:0.5rem;">[ ] Minuto a minuto de la fiesta</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>Notas Importantes</h3>
+                        <ul style="list-style:none;padding:0;">
+                            <li style="margin-bottom:0.5rem;">Boda el 26 de Diciembre de 2026 (Navidad)</li>
+                            <li style="margin-bottom:0.5rem;">Purísima del Rincón — prever logística de viaje</li>
+                            <li style="margin-bottom:0.5rem;">Fecha límite pago: 18 de Diciembre de 2026</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resumen Financiero -->
+            <section class="section">
+                <h2 class="section-title">✦ Resumen Financiero</h2>
+                <div class="info-card">
+                    <table style="width:100%;">
+                        <tr>
+                            <td><strong>Paquete contratado:</strong></td>
+                            <td style="text-align:right;">$8,500.00 MXN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anticipo recibido:</strong></td>
+                            <td style="text-align:right;color:#10b981;">- $1,000.00 MXN</td>
+                        </tr>
+                        <tr style="border-top:2px solid #C9A844;">
+                            <td><strong>Saldo pendiente:</strong></td>
+                            <td style="text-align:right;font-weight:bold;color:#B8962E;">$7,500.00 MXN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fecha límite de pago:</strong></td>
+                            <td style="text-align:right;">18 de Diciembre, 2026</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Contacto -->
+            <section class="section">
+                <div class="contact-box">
+                    <h3>Información de Contacto</h3>
+                    <p style="margin-bottom:1rem;">
+                        <strong>Contratante:</strong> Juan Manuel Bernal Aguayo<br>
+                        <strong>Tel/WhatsApp:</strong> <a href="https://wa.me/524761005385">476 100 5385</a>
+                    </p>
+                    <hr style="border:1px solid rgba(201,168,68,0.25);margin:1.5rem 0;">
+                    <p>
+                        <strong style="color:#C9A844;">Producciones Foro 7</strong><br>
+                        <strong>WhatsApp:</strong> <a href="https://wa.me/5214779203776">477-920-3776</a><br>
+                        <strong>Email:</strong> <a href="mailto:foro7producciones@gmail.com">foro7producciones@gmail.com</a><br>
+                        <strong>Ubicación:</strong> Padilla 112, Cumbres de Arbide, León, Gto.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</body>
+</html>
