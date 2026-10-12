@@ -30,12 +30,13 @@ def generate():
             photos.append({
                 "name":     name,
                 "filename": filename,
-                "path":     f"imagenes/{filename}"
+                "path":     f"imagenes/{filename}",
+                "thumb":    f"imagenes/thumb/{filename}" if os.path.isfile(os.path.join(IMAGENES_DIR, "thumb", filename)) else f"imagenes/{filename}"
             })
 
         lines = ["const photos = ["]
         for p in photos:
-            lines.append(f"  {{ name: {json.dumps(p['name'])}, filename: {json.dumps(p['filename'])}, path: {json.dumps(p['path'])} }},")
+            lines.append(f"  {{ name: {json.dumps(p['name'])}, filename: {json.dumps(p['filename'])}, path: {json.dumps(p['path'])}, thumb: {json.dumps(p['thumb'])} }},")
         lines.append("];")
         photos_js = "\n".join(lines) + "\n"
         print(f"✓ {len(photos)} fotos encontradas")
