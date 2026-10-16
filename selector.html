@@ -249,7 +249,7 @@
             .option-buttons { grid-template-columns: 1fr; }
         }
     </style>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261015">
 </head>
 <body>
     <div class="loading" id="loading"><div class="spinner"></div></div>
@@ -347,6 +347,7 @@
         }
         function saveSelections() {
             try { localStorage.setItem(STORAGE_KEY, JSON.stringify(selections)); } catch(e) {}
+            window.dispatchEvent(new Event('photo-selections-changed'));
         }
         loadSelections();
         let activeFilter = 'all';
@@ -414,7 +415,7 @@
         function updateStats() {
             const counts = { ampliacion:0, impresion:0, redes_sociales:0, invitaciones_web:0, descartada:0 };
             Object.values(selections).forEach(s =>
-                s.categories.forEach(cat => { if (counts[cat] !== undefined) counts[cat]++; }));
+                (s?.categories || []).forEach(cat => { if (counts[cat] !== undefined) counts[cat]++; }));
             Object.keys(counts).forEach(cat =>
                 document.getElementById(`count-${cat}`).textContent = counts[cat]);
             return counts;
@@ -467,7 +468,7 @@
 
         function limpiarSeleccion() {
             if (confirm('¿Limpiar toda la selección?')) {
-                selections = {}; saveSelections(); updateStats(); renderGallery(); saveSelections();
+                selections = {}; saveSelections(); updateStats(); renderGallery();
             }
         }
 
@@ -484,10 +485,16 @@
             }
         });
     </script>
-    <script src="photos_list.js?v=2"></script>
+    <script src="photos_list.js?v=3"></script>
     <script src="default_selections.js?v=1"></script>
+    <script>
+        selections = { ...defaultSelections, ...selections };
+        updateStats();
+        renderGallery();
+        document.getElementById('loading').style.display = 'none';
+    </script>
     <script src="visitas.js?v=1"></script>
-<script src="js/selector-sb-inline.js?v=1"></script>
+<script src="js/selector-sb-inline.js?v=2"></script>
 <script src="js/foro7-footer.js?v=1"></script>
 </body>
 </html>

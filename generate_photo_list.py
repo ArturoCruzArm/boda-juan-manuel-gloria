@@ -18,7 +18,7 @@ def generate():
     files = sorted([
         f for f in os.listdir(IMAGENES_DIR)
         if os.path.splitext(f)[1] in EXTENSIONS
-    ])
+    ], key=lambda f: ("_fondo_" in f, f))
 
     if not files:
         print("No se encontraron imágenes en la carpeta 'imagenes/'")

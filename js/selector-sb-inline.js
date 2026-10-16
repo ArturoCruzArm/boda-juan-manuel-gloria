@@ -15,6 +15,8 @@
     let sbOk       = true;
     let _syncing   = false;
     let _syncTimer = null;
+    let localRevision = 0;
+    let savePending = false;
 
     async function getEventoId() {
         if (eventoId) return eventoId;
@@ -34,7 +36,7 @@
                 var s = e[1];
                 return s && ((s.categories && s.categories.length) || s.notes);
             });
-            if (!entries.length) return;
+
             // Store as individual rows keyed by filename index, plus full snapshot in datos
             var snapshot = {};
             entries.forEach(function(e) { snapshot[e[0]] = e[1]; });
@@ -44,7 +46,7 @@
             _clock++;
             try { localStorage.setItem(_clockKey, String(_clock)); } catch(e) {}
             snapshot._sync = { clock: _clock, sid: sid, updatedAt: new Date().toISOString() };
-            await fetch(SUPABASE_URL + '/rest/v1/selecciones?on_conflict=evento_id,foto_index', {
+            const result = await fetch(SUPABASE_URL + '/rest/v1/selecciones?on_conflict=evento_id,foto_index', {
                 method: 'POST',
                 headers: Object.assign({}, SB_H, { 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
                 body: JSON.stringify([{
@@ -56,14 +58,16 @@
                     descartada: false,
                     ampliacion: false,
                     datos: snapshot,
-                    code_version: 5
+                    code_version: 6
                 }])
             });
-        } catch(e) { sbOk = false; }
+            if (!result.ok) throw new Error('No se pudo guardar la selección');
+        } catch(e) { sbOk = false; throw e; }
     }
 
     async function sbLoad(isPoll) {
-        if (!sbOk) return;
+        if (!sbOk || savePending) return;
+        const revision = localRevision;
         try {
             const eid = await getEventoId();
             if (!eid) return;
@@ -71,7 +75,9 @@
                 SUPABASE_URL + '/rest/v1/selecciones?evento_id=eq.' + eid + '&select=foto_index,datos',
                 { headers: SB_H }
             );
+            if (!r.ok) throw new Error('No se pudo cargar la selección');
             const rows = await r.json();
+            if (revision !== localRevision || savePending) return;
 
             // Merge all datos snapshots from Supabase
             var sb = {};
@@ -97,7 +103,9 @@
             _syncing = true;
             try {
                 localStorage.setItem(SB_KEY, JSON.stringify(merged));
-                if (typeof renderGallery === 'function') renderGallery();
+                selections = Object.fromEntries(Object.entries(merged).filter(function(e) { return e[1] && Array.isArray(e[1].categories); }));
+                updateStats();
+                renderGallery();
             } finally { _syncing = false; }
 
             if (!isPoll) {
@@ -133,17 +141,19 @@
         document.body.insertBefore(banner, document.body.firstChild);
     }
 
-    // Patch localStorage to detect saves from inline selector
-    var _origSet = localStorage.setItem.bind(localStorage);
-    localStorage.setItem = function(key, value) {
-        _origSet(key, value);
-        if (key === SB_KEY && !_syncing) {
-            clearTimeout(_syncTimer);
-            _syncTimer = setTimeout(function() {
-                try { sbSync(JSON.parse(value)); } catch(e) {}
-            }, 600);
-        }
-    };
+    // Explicit notification: Storage method overrides are not reliable in browsers.
+    window.addEventListener('photo-selections-changed', function() {
+        localRevision++;
+        savePending = true;
+        const revision = localRevision;
+        clearTimeout(_syncTimer);
+        _syncTimer = setTimeout(async function() {
+            try {
+                await sbSync(selections);
+                if (revision === localRevision) savePending = false;
+            } catch(e) { console.warn('Selección guardada localmente; sincronización pendiente.'); }
+        }, 600);
+    });
 
     document.addEventListener('DOMContentLoaded', function() {
         sbLoad(false);

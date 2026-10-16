@@ -71,4 +71,6 @@ const photos = [
   { name: "IMG_3508", filename: "IMG_3508.webp", path: "imagenes/IMG_3508.webp", thumb: "imagenes/thumb/IMG_3508.webp" },
   { name: "IMG_3509", filename: "IMG_3509.webp", path: "imagenes/IMG_3509.webp", thumb: "imagenes/thumb/IMG_3509.webp" },
   { name: "IMG_3510", filename: "IMG_3510.webp", path: "imagenes/IMG_3510.webp", thumb: "imagenes/thumb/IMG_3510.webp" },
+  { name: "IMG_3438_fondo_jardin", filename: "IMG_3438_fondo_jardin.webp", path: "imagenes/IMG_3438_fondo_jardin.webp", thumb: "imagenes/thumb/IMG_3438_fondo_jardin.webp" },
+  { name: "IMG_3438_fondo_piedra", filename: "IMG_3438_fondo_piedra.webp", path: "imagenes/IMG_3438_fondo_piedra.webp", thumb: "imagenes/thumb/IMG_3438_fondo_piedra.webp" },
 ];
